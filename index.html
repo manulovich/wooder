@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>wooder</title>
+	<meta name="desscription" content="Индивидуальные декор и фурнтитура по проектам архитекторов и дизайнеров">
+	<meta name="keywords" content="wooder, decor, furniture, декор, фурнитура">
+	<meta name="robots" content="noindex">
+	<link rel="shortcut icon" href="img/favicon.ico" type="ico">
+	<link rel="stylesheet" href="css/style.min.css">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>	 
+</head>
+<body>
+	<div class="wrapper" id="wooder">
+		<main>
+			
+			<div class="screenOne">
+				
+				<header class="screenOne__header header">
+
+					<div class="header__menu menu" v-bind:class="{ menu_active: menu_status_active }" v-on:click="menu_status_active = !menu_status_active">
+						<div class="menu__burger"><span></span></div>
+						<p class="menu__text textLangEN">menu</p>
+						<p class="menu__text textLangRU">меню</p>
+					</div><!--end menu-->
+
+					<transition name="menu">
+						<div class="header__menuNav nav" v-show="menu_status_active">
+							<ul>
+								<!--textLangEN-->
+								<li class="nav__link textLangEN" v-on:click="activeHome(); menu_status_active = !menu_status_active;">home</li>
+								<li class="nav__link textLangEN" v-on:click="activeProducts(); menu_status_active = !menu_status_active;">products</li>
+								<li class="nav__link textLangEN" v-on:click="activeAbout(); menu_status_active = !menu_status_active;">about</li>
+								<!--textLangRU-->
+								<li class="nav__link textLangRU" v-on:click="activeHome(); menu_status_active = !menu_status_active;">домой</li>
+								<li class="nav__link textLangRU" v-on:click="activeProducts(); menu_status_active = !menu_status_active;">продукция</li>
+								<li class="nav__link textLangRU" v-on:click="activeAbout(); menu_status_active = !menu_status_active;">о нас</li>
+							</ul>
+						</div>
+					</transition>
+
+					<nav class="header__nav nav">
+						<div class="nav__logo"><p>wooder</p><span></span></div>
+						<ul>
+							<!--textLangEN-->
+							<li class="nav__link textLangEN" v-on:click="activeProducts();">products</li>
+							<li class="nav__link textLangEN" v-on:click="activeAbout();">about</li>
+							<!--textLangRU-->
+							<li class="nav__link textLangRU" v-on:click="activeProducts();">продукция</li>
+							<li class="nav__link textLangRU" v-on:click="activeAbout();">о нас</li>
+						</ul>
+					</nav><!-- end nav -->
+
+					<div class="header__setting setting">
+						<div class="setting__info info" v-on:click="info_status_active = !info_status_active">
+							<img src="img/info.png" alt="info">
+						</div><!-- end info -->
+						<div class="setting__lang lang" v-bind:class="{ lang_active: lang_status_active }" v-on:click="lang_status_active = !lang_status_active">
+							<p>{{ langNow }}</p>
+							<span></span>
+						</div><!-- end lang -->
+					</div><!-- end setting-->
+
+					<transition name="info">
+						<div class="setting__infoBlock" v-show="info_status_active">
+							<!--textLangEN-->
+							<div class="textLangEN">
+								<p><a href="https://www.behance.net/Olianishyn">Designed by Viacheslav Olianishyn</a></p>
+								<p>Developer by Vladislav Kotelnikov</p>
+							</div>
+							<!--textLangRU-->
+							<div class="textLangRU">
+								<p><a href="https://www.behance.net/Olianishyn">Дизайнер: Viacheslav Olianishyn</a></p>
+								<p>Верстальщик: Vladislav Kotelnikov</p>
+							</div>
+						</div>
+					</transition>
+
+					<transition name="lang">
+						<div class="setting__langs lang" v-show="lang_status_active">
+							<p v-on:click="textLang__on('en'); translate('en')"> {{ langOne }}</p><!--textLangEN-->
+							<p v-on:click="textLang__on('ru'); translate('ru')">{{ langTwo }}</p><!--textLangRU-->
+						</div>
+					</transition>
+
+				</header><!--end header-->
+
+				<section class="screenOne__main">
+					
+					<div class="screenOne__pageNumber pageNumber">
+						<p class="pageNumber__pageNow">{{ pageNow }}</p>
+						<div class="pageNumber__punkt"></div>
+						<div class="pageNumber__punkt"></div>
+						<div class="pageNumber__punkt"></div>
+						<div class="pageNumber__punkt"></div>
+					</div><!--end screenOne__pageNumber-->
+
+					<div class="screenOne__greeting">
+						<h1>wooder</h1>
+						<div href="#" class="screenOne__learnMore textLangEN" v-on:click="more_one_status_active = !more_one_status_active; adBodyFixed()"><p>learn more <span></span></p></div>
+						<div href="#" class="screenOne__learnMore textLangRU" v-on:click="more_one_status_active = !more_one_status_active; adBodyFixed()"><p>узнать больше<span></span></p></div>
+					</div><!--end screenOne__greeting-->
+
+					<p class="screenOne__about textLangEN">furniture & decor</p>
+					<p class="screenOne__about textLangRU">фурнитура & декор</p><!--end screenOne__about-->
+
+					<div class="screenOne__share" v-on:click="share_status_active = !share_status_active"><img src="img/share.png" alt="share"></div><!--end screenOne__share-->
+
+					<transition name="share">
+						<div class="screenOne__shareBlock" v-show="share_status_active">
+
+							<script src="https://yastatic.net/es5-shims/0.0.2/es5-shims.min.js"></script>
+							<script src="https://yastatic.net/share2/share.js"></script>
+							<div class="ya-share2" data-services="vkontakte,facebook,twitter,telegram"></div>
+
+						</div>
+					</transition>
+
+					<transition name="more">
+						
+						<div class="more" v-show="more_one_status_active">
+							
+							<div class="more__block">
+								<section class="more__leftBlock">
+									<div class="more__img">
+										<img src="img/bgtwo.webp">
+									</div>
+								</section>
+
+								<section class="more__rightBlock">
+									<div class="more__button" v-on:click="more_one_status_active = !more_one_status_active; removeBodyFixed()"><span></span></div>
+
+									<h2 class="more__title title">wooder</h2>
+									<p class="more__subtitle subtitle textLangEN">
+										Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis facere temporibus error, magnam beatae, ipsum ipsam doloremque, laborum neque repellat, omnis ducimus. Molestiae reiciendis modi dolorum facilis qui totam quisquam.
+									</p>
+									<p class="more__subtitle subtitle textLangRU">
+										Таким образом постоянный количественный рост и сфера нашей активности требуют определения и уточнения форм развития. Не следует, однако забывать, что реализация намеченных плановых заданий способствует подготовки и реализации форм развития. 
+									</p>
+								</section>
+							</div>
+
+						</div>
+
+					</transition>
+
+				</section><!--end screenOne__main-->
+
+			</div>
+			<!--end screenOne-->
+
+			<div class="screenTwo">
+				
+				<div class="container">
+					<div class="screenTwo__body">
+
+						<div class="screenTwo__top">
+							<!-- textLangEN -->
+							<div class="screenTwo__leftTopContent textLangEN">
+								<h2 class="screenTwo__topTitle title">furniture</h2>
+								<p class="screenTwo__topSubtitle subtitle">
+									Wooder utilizes materials otherwise left behind, rendered useless in their original intent. By creating new pieces made of reclaimed barnwood
+								</p>
+								<div class="screenTwo__topLearnMore learnMore" v-on:click="more_two_top_status_active = !more_two_top_status_active; adBodyFixed()"><p>learn more</p><span></span></div>
+							</div>
+
+							<!-- textLangRU -->
+							<div class="screenTwo__leftTopContent textLangRU">
+								<h2 class="screenTwo__topTitle title">фурнитура</h2>
+								<p class="screenTwo__topSubtitle subtitle">
+									Wooder утилизирует материалы, которые остались бесполезными по перваначальному назначению. Мы создаём новые изделия из переработанной древисины.
+								</p>
+								<div class="screenTwo__topLearnMore learnMore" v-on:click="more_two_top_status_active = !more_two_top_status_active; adBodyFixed()"><p>узнать больше</p><span></span></div>
+							</div>
+
+							<transition name="more">
+						
+								<div class="more" v-show="more_two_top_status_active">
+								
+									<div class="more__block">
+										<section class="more__leftBlock">
+											<div class="more__img">
+												<img src="img/OneIMG.jpg">
+											</div>
+										</section>
+
+										<section class="more__rightBlock">
+											<div class="more__button" v-on:click="more_two_top_status_active = !more_two_top_status_active; removeBodyFixed()"><span></span></div>
+
+											<h2 class="more__title title textLangEN">furniture</h2>
+											<h2 class="more__title title textLangRU">фурнитура</h2>
+											<p class="more__subtitle subtitle textLangEN">
+												Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis facere temporibus error, magnam beatae, ipsum ipsam doloremque, laborum neque repellat, omnis ducimus. Molestiae reiciendis modi dolorum facilis qui totam quisquam.
+											</p>
+											<p class="more__subtitle subtitle textLangRU">
+												Таким образом постоянный количественный рост и сфера нашей активности требуют определения и уточнения форм развития. Не следует, однако забывать, что реализация намеченных плановых заданий способствует подготовки и реализации форм развития. 
+											</p>
+										</section>
+									</div>
+
+								</div>
+
+							</transition>
+
+							<div class="screenTwo__rightTopContent">
+								<div class="screenTwo__icon"><img src="img/OneIMG.jpg" alt="furniture"></div>
+							</div>
+
+						</div><!--screenTwo__top-->
+
+						<p class="screenTwo__countProductOne countProduct">01<span></span></p>
+
+						<div class="screenTwo__bottom">
+							<div class="screenTwo__leftBottomContent">
+								<div class="screenTwo__icon"><img src="img/TwoIMG.jpg" alt="decor"></div>
+							</div>
+							<!-- textLangEN -->
+							<div class="screenTwo__rightBottomContent textLangEN">
+								<h2 class="screenTwo__bottomTitle title">decor</h2>
+								<p class="screenTwo__bottomSubtitle subtitle">
+									We make all types of wooden decor as per design given by Architect,Interior designer, contractor which is suitable
+ 									your premises.
+								</p>
+								<div class="screenTwo__bottomLearnMore learnMore" v-on:click="more_two_bottom_status_active = !more_two_bottom_status_active; adBodyFixed()"><p>learn more</p><span></span></div>
+							</div>
+
+							<!-- textLangRU -->
+							<div class="screenTwo__rightBottomContent textLangRU">
+								<h2 class="screenTwo__bottomTitle title">декор</h2>
+								<p class="screenTwo__bottomSubtitle subtitle">
+									Мы производим все виды деревянного декора по проекту архитектора, дизайнера интерьера, подрядчика, подходящего для вашего помещения.
+								</p>
+								<div class="screenTwo__bottomLearnMore learnMore" v-on:click="more_two_bottom_status_active = !more_two_bottom_status_active; adBodyFixed()"><p>узнать больше</p><span></span></div>
+							</div>
+
+							<transition name="more">
+						
+								<div class="more" v-show="more_two_bottom_status_active">
+								
+									<div class="more__block">
+									<section class="more__leftBlock">
+										<div class="more__img">
+											<img src="img/TwoIMG.jpg">
+										</div>
+									</section>
+
+									<section class="more__rightBlock">
+										<div class="more__button" v-on:click="more_two_bottom_status_active = !more_two_bottom_status_active; removeBodyFixed()"><span></span></div>
+
+										<h2 class="more__title title textLangEN">decor</h2>
+										<h2 class="more__title title textLangRU">декор</h2>
+										<p class="more__subtitle subtitle textLangEN">
+											Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis facere temporibus error, magnam beatae, ipsum ipsam doloremque, laborum neque repellat, omnis ducimus. Molestiae reiciendis modi dolorum facilis qui totam quisquam.
+										</p>
+										<p class="more__subtitle subtitle textLangRU">
+											Таким образом постоянный количественный рост и сфера нашей активности требуют определения и уточнения форм развития. Не следует, однако забывать, что реализация намеченных плановых заданий способствует подготовки и реализации форм развития. 
+										</p>
+									</section>
+									</div>
+
+								</div>
+
+							</transition>
+
+						</div><!--screenTwo__bottom-->
+
+						<p class="screenTwo__countProductTwo countProduct">02<span></span></p>
+
+					</div>
+				</div>
+
+			</div>
+			<!--end screenTwo-->
+
+			<div class="screenThree">
+				
+				<div class="container">
+					<div class="screenThree__body">
+						
+						<div class="screenThree__top">
+							<div class="textLangEN">
+								<h2 class="screenThree__title title">wooder - is quality</h2>
+								<p class="screenThree__subtitle subtitle">
+									We create unique design objects made of rare wood, specially under the order. Look at the short video about our work.
+								</p>
+							</div>
+
+							<div class="textLangRU">
+								<h2 class="screenThree__title title">wooder это качество</h2>
+								<p class="screenThree__subtitle subtitle">
+									Мы создаём уникальные дизайнерские предметы из редких пород дерева под заказ. Посмотрите наши видеоролики о работе
+								</p>
+							</div>
+						</div><!--end screenThree__top-->
+
+						<div class="screenThree__bottom">
+							<div class="screenThree__videoWrapper" v-on:click="video_three_one_status_active = !video_three_one_status_active; adBodyFixed()">
+								<div class="screenThree__video">
+									<img class="screenThree__preview" src="img/previewone.webp" alt="Innovative Design">
+									<div class="screenThree__play"></div>
+									<img src="img/play.png" alt="" class="screenThree__playIcon">
+								</div>
+								<p class="screenThree__altText textLangEN">Innovative Design</p>
+								<p class="screenThree__altText textLangRU">Инновационный дизайн</p>
+							</div>
+
+							<transition name="video">
+								
+								<div class="videoBlock" v-show="video_three_one_status_active">
+									
+									<div class="videoBlock__main">
+										
+										<iframe src="https://www.youtube.com/embed/z3GS5oYGq5U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+										<div class="video__button" v-on:click="video_three_one_status_active = !video_three_one_status_active; removeBodyFixed()"><span></span></div>
+
+									</div>
+
+								</div>
+
+							</transition>
+
+							<div class="screenThree__videoWrapper" v-on:click="video_three_two_status_active = !video_three_two_status_active; adBodyFixed()">
+								<div class="screenThree__video">
+									<img class="screenThree__preview" src="img/previewtwo.webp" alt="High-level Skills">
+									<div class="screenThree__play"></div>
+									<img src="img/play.png" alt="" class="screenThree__playIcon">
+								</div>
+								<p class="screenThree__altText textLangEN">High-level Skills</p>
+								<p class="screenThree__altText textLangRU">Навыки высокого уровня</p>
+							</div>
+
+							<transition name="video">
+								
+								<div class="videoBlock" v-show="video_three_two_status_active">
+									
+									<div class="videoBlock__main">
+										
+										<iframe src="https://www.youtube.com/embed/kfOe-F64C_A" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+										<div class="video__button" v-on:click="video_three_two_status_active = !video_three_two_status_active; removeBodyFixed()"><span></span></div>
+
+									</div>
+
+								</div>
+
+							</transition>
+							
+							<div class="screenThree__videoWrapper" v-on:click="video_three_three_status_active = !video_three_three_status_active; adBodyFixed()">
+								<div class="screenThree__video">
+									<img class="screenThree__preview" src="img/previewthree.webp" alt="Quality Products">
+									<div class="screenThree__play"></div>
+									<img class="screenThree__playIcon" src="img/play.png" alt="play">
+								</div>
+								<p class="screenThree__altText textLangEN">Quality Products</p>
+								<p class="screenThree__altText textLangRU">Качественные продукты</p>
+							</div>
+
+							<transition name="video">
+								
+								<div class="videoBlock" v-show="video_three_three_status_active">
+									
+									<div class="videoBlock__main">
+										
+										<iframe src="https://www.youtube.com/embed/mpykT40_VBc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+										<div class="video__button" v-on:click="video_three_three_status_active = !video_three_three_status_active; removeBodyFixed()"><span></span></div>
+
+									</div>
+
+								</div>
+
+							</transition>
+
+						</div><!--end screenThree__bottom-->
+
+					</div>
+				</div>
+
+			</div>
+			<!--end screenThree-->
+
+			<div class="screenFour">
+
+				<div class="screenFour__border">
+					<div class="container">
+
+						<div class="screenFour__body">
+							<div class="screenFour__main">
+								<h2 class="screenFour__title title textLangEN">we Do the design of any complexity</h2>	
+								<h2 class="screenFour__title title textLangRU">дизайн любой сложности</h2>	
+								<p class="screenFour__subtitle subtitle textLangEN">
+									This is a team of professionals that make the furniture and wood décor high standard. Creating modern designs. Adhering to the global quality standards. And we are doing work with love.
+								</p>
+								<p class="screenFour__subtitle subtitle textLangRU">
+									Мы команда профессионалов, которая делает мебель и декор из дерева на высшем уровне. Создаём современный дизайн. Соблюдаем мировые стандарты качества. И, конечно, делаем работу с любовью.
+								</p>
+								<div class="screenFour__watch textLangEN" v-on:click="video_four_status_active = !video_four_status_active; adBodyFixed()"><div class="screenFour__circle"><span></span></div><p class="screenFour__text">watch video</p></div>
+								<div class="screenFour__watch textLangRU" v-on:click="video_four_status_active = !video_four_status_active; adBodyFixed()"><div class="screenFour__circle"><span></span></div><p class="screenFour__text">смотреть видео</p></div>
+							</div>
+
+							<transition name="video">
+								
+								<div class="videoBlock" v-show="video_four_status_active">
+										
+										<div class="videoBlock__main">
+											
+											<iframe src="https://www.youtube.com/embed/EO8hH_2OwCU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+											<div class="video__button" v-on:click="video_four_status_active = !video_four_status_active; removeBodyFixed()"><span></span></div>
+
+										</div>
+
+								</div>
+
+							</transition>
+
+						</div>
+
+					</div>
+				</div>
+
+				<div class="screenFour__bgPlay">
+					<img src="img/bgplay.png" alt="play">
+				</div>
+
+			</div>
+			<!--end screenFour-->
+
+			<div class="screenFive">
+
+				<div class="container">
+					<div class="screenFive__body">
+						
+						<div class="screenFive__leftBlock">
+							<img src="img/about.webp" alt="about">
+						</div>
+						<!--textLangEN-->
+						<div class="screenFive__rightBlock textLangEN">
+							<h2 class="screenFive__title title">about us</h2>
+							<p class="screenFive__subtitle subtitle">
+								We are a team of professionals in the wood processing and the creation of wooden furniture of the highest class
+							</p>
+							<div class="screenFive__learnMore" v-on:click="more_five_status_active = !more_five_status_active; adBodyFixed()"><p>learn more</p><span></span></div>
+						</div>
+						<!--textLangRU-->
+						<div class="screenFive__rightBlock textLangRU">
+							<h2 class="screenFive__title title">о нас</h2>
+							<p class="screenFive__subtitle subtitle">
+								Мы - команда профессионалов в области обработки дерева и создания деревянной мебели высочайшего класса.
+							</p>
+							<div class="screenFive__learnMore" v-on:click="more_five_status_active = !more_five_status_active; adBodyFixed()"><p>Узнать больше</p><span></span></div>
+						</div>
+
+						<transition name="more">
+						
+								<div class="more" v-show="more_five_status_active">
+								
+									<div class="more__block">
+										<section class="more__leftBlock">
+											<div class="more__img">
+												<img src="img/about.webp">
+											</div>
+										</section>
+
+										<section class="more__rightBlock">
+											<div class="more__button" v-on:click="more_five_status_active = !more_five_status_active; removeBodyFixed()"><span></span></div>
+
+											<h2 class="more__title title textLangEN">about us</h2>
+											<h2 class="more__title title textLangRU">о нас</h2>
+											<p class="more__subtitle subtitle textLangEN">
+												Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis facere temporibus error, magnam beatae, ipsum ipsam doloremque, laborum neque repellat, omnis ducimus. Molestiae reiciendis modi dolorum facilis qui totam quisquam.
+											</p>
+											<p class="more__subtitle subtitle textLangRU">
+												Таким образом постоянный количественный рост и сфера нашей активности требуют определения и уточнения форм развития. Не следует, однако забывать, что реализация намеченных плановых заданий способствует подготовки и реализации форм развития. 
+											</p>
+										</section>
+									</div>
+
+								</div>
+
+							</transition>
+
+					</div>	
+				</div>
+
+			</div>
+			<!--end screenFive-->
+
+		</main>
+		<footer class="footer">
+
+			<div class="container">
+				<div class="footer__body">
+					
+					<p class="footer__year">© 2016 WOODER</p>
+					<div class="footer__logo"><p>wooder</p><span></span></div>
+					<p class="footer__design textLangEN">Designed by <span>Viacheslav Olianishyn</span></p>
+					<p class="footer__design textLangRU">Дизайн: <span>Viacheslav Olianishyn</span></p>
+
+				</div>
+			</div>
+
+		</footer>
+	</div>
+	<script src="js/script.min.js"></script>
+</body>
+</html>
