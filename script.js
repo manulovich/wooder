@@ -64,7 +64,7 @@ new Vue({
 			}
 			//screenFive
 			let screenFive = document.querySelector(".screenFive").offsetTop;
-			if(window.pageYOffset >= (screenFive-200)){
+			if(window.pageYOffset >= (screenFive-100)){
 				document.querySelectorAll(".screenFive__rightBlock").forEach(function(item){
 					item.classList.add("screenFive__rightBlock_active");
 				});
